@@ -2,8 +2,20 @@ import './config';
 import express from 'express';
 import log from './helpers/log';
 import pool from './db';
+import useRoutes from './routes';
+
+process.on('uncaughtException', (e) =>
+  log.error({ label: e.name, message: e.message })
+);
+process.on('unhandledRejection', (e) =>
+  log.error({ label: e.name, message: e.message })
+);
 
 const app = express();
+app.use(express.json({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
+
+useRoutes(app);
 
 // 'postgres://postgres:vasya400@localhost:5432/football'
 
