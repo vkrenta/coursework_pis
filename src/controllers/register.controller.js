@@ -6,9 +6,10 @@ import { promises as fs } from 'fs';
 
 const registerController = async (req, res, next) => {
   try {
-    const { password, email, fullName } = req.body;
+    const { password, email, fullName, phone } = req.body;
 
-    if (!(password || email || fullName)) return res.status(400).end();
+    if (!(password && email && fullName && phone))
+      return res.status(400).send('Missing required fields');
 
     const cPassword = await hash(password, Number(process.env.SALT_ROUNDS));
 
@@ -18,6 +19,7 @@ const registerController = async (req, res, next) => {
       {
         fullName,
         password: cPassword,
+        phone,
         email,
       },
       process.env.LINK_SECRET,
@@ -39,7 +41,7 @@ const registerController = async (req, res, next) => {
       html: htmlTemplate,
     });
 
-    res.status(200).end();
+    res.status(200).send('Повідомлення відправлено на пошту');
   } catch (e) {
     next(e);
   }
