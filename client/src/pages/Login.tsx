@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import validator from 'validator';
 
 function Copyright() {
   return (
@@ -61,6 +62,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
+  const [loginError, setLoginError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const loginInput = useRef<HTMLInputElement>(null);
+  const passwordInput = useRef<HTMLInputElement>(null);
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -74,19 +79,34 @@ export default function Login() {
           <Typography component="h1" variant="h5">
             Вхід
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate={false}>
             <TextField
+              inputRef={loginInput}
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Електронна пошта"
-              name="email"
-              autoComplete="email"
+              id="login"
+              label="Логін"
+              name="login"
+              helperText={
+                loginError ? 'Введіть свій email або номер телефону' : ''
+              }
               autoFocus
+              error={loginError}
+              onBlur={() =>
+                setLoginError(
+                  !!loginInput.current?.value
+                    ? !validator.isEmail(`${loginInput.current?.value!}`) &&
+                        !validator.isMobilePhone(
+                          `${loginInput.current?.value!}`
+                        )
+                    : false
+                )
+              }
             />
             <TextField
+              inputRef={passwordInput}
               variant="outlined"
               margin="normal"
               required
@@ -95,11 +115,24 @@ export default function Login() {
               label="Пароль"
               type="password"
               id="password"
+              helperText={
+                passwordError
+                  ? 'Пароль повинен складатися з 8 символів і більше'
+                  : ''
+              }
               autoComplete="current-password"
+              error={passwordError}
+              onBlur={() =>
+                setPasswordError(
+                  !!passwordInput.current?.value
+                    ? passwordInput.current?.value.length! < 8
+                    : false
+                )
+              }
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              label="Запам'ятати мене"
             />
             <Button
               type="submit"
@@ -108,17 +141,23 @@ export default function Login() {
               color="primary"
               className={classes.submit}
             >
-              Sign In
+              Увійти
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
+                <Link
+                  href="#"
+                  variant="body2"
+                  onClick={(e: React.MouseEvent) => {
+                    e.preventDefault();
+                  }}
+                >
+                  Забули пароль?
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link href="/signup" variant="body2">
+                  {'Не маєте облікового запису? Зареєструватись'}
                 </Link>
               </Grid>
             </Grid>
