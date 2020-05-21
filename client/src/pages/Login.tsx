@@ -64,6 +64,8 @@ export default function Login() {
   const classes = useStyles();
   const [loginError, setLoginError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
   const loginInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
 
@@ -89,21 +91,24 @@ export default function Login() {
               id="login"
               label="Логін"
               name="login"
+              onKeyPress={(e: React.KeyboardEvent) => {
+                if (e.key === 'Enter') passwordInput.current?.focus();
+                setLogin(`${loginInput.current?.value}`);
+              }}
               helperText={
-                loginError ? 'Введіть свій email або номер телефону' : ''
+                loginError ? 'Введіть свій email або номер телефону' : ' '
               }
               autoFocus
               error={loginError}
-              onBlur={() =>
+              onBlur={() => {
+                loginInput.current?.blur();
                 setLoginError(
-                  !!loginInput.current?.value
-                    ? !validator.isEmail(`${loginInput.current?.value!}`) &&
-                        !validator.isMobilePhone(
-                          `${loginInput.current?.value!}`
-                        )
-                    : false
-                )
-              }
+                  !!login
+                    ? !validator.isEmail(login) &&
+                        !validator.isMobilePhone(login)
+                    : true
+                );
+              }}
             />
             <TextField
               inputRef={passwordInput}
@@ -115,19 +120,18 @@ export default function Login() {
               label="Пароль"
               type="password"
               id="password"
+              onKeyPress={(e: React.KeyboardEvent) => {
+                setPassword(`${passwordInput.current?.value}`);
+              }}
               helperText={
                 passwordError
                   ? 'Пароль повинен складатися з 8 символів і більше'
-                  : ''
+                  : ' '
               }
               autoComplete="current-password"
               error={passwordError}
               onBlur={() =>
-                setPasswordError(
-                  !!passwordInput.current?.value
-                    ? passwordInput.current?.value.length! < 8
-                    : false
-                )
+                setPasswordError(!!password ? password.length! < 8 : true)
               }
             />
             <FormControlLabel
@@ -140,6 +144,12 @@ export default function Login() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              disabled={
+                !password ||
+                !login ||
+                password.length! < 8 ||
+                (!validator.isEmail(login) && !validator.isMobilePhone(login))
+              }
             >
               Увійти
             </Button>

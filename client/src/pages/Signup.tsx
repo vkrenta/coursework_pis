@@ -1,10 +1,8 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -12,6 +10,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import validator from 'validator';
 
 function Copyright() {
   return (
@@ -46,8 +45,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const checkName = (name: string) =>
+  /^([А-ЯІA-ZÀ-ÿ][-,а-яіa-z.']+[ ]*)+/gm.test(name);
+
 export default function SignUp() {
   const classes = useStyles();
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const [firstNameError, setFirstNameError] = useState(false);
+  const [lastNameError, setLastNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [phoneError, setPhoneError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+
+  const firstNameInput = useRef<HTMLInputElement>(null);
+  const lastNameInput = useRef<HTMLInputElement>(null);
+  const emailInput = useRef<HTMLInputElement>(null);
+  const phoneInput = useRef<HTMLInputElement>(null);
+  const passwordInput = useRef<HTMLInputElement>(null);
+  const confirmPasswordInput = useRef<HTMLInputElement>(null);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -60,70 +83,147 @@ export default function SignUp() {
           Реєстрація
         </Typography>
         <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="Ім'я"
-                autoFocus
-              />
+          <Grid container spacing={1}>
+            <Grid container direction="row" spacing={2} justify="center">
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  inputRef={firstNameInput}
+                  autoComplete="fname"
+                  name="firstName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  onKeyPress={(e: React.KeyboardEvent) => {
+                    setFirstName(`${firstNameInput.current?.value}`);
+                    if (e.key === 'Enter') lastNameInput.current?.focus();
+                  }}
+                  id="firstName"
+                  label="Ім'я"
+                  autoFocus
+                  helperText={firstNameError ? 'Невірний формат' : ' '}
+                  error={firstNameError}
+                  onBlur={() =>
+                    setFirstNameError(
+                      !!firstName ? !checkName(firstName) : true
+                    )
+                  }
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  inputRef={lastNameInput}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  onKeyPress={(e: React.KeyboardEvent) => {
+                    setLastName(`${lastNameInput.current?.value}`);
+                    if (e.key === 'Enter') emailInput.current?.focus();
+                  }}
+                  id="lastName"
+                  label="Прізвище"
+                  name="lastName"
+                  autoComplete="lname"
+                  helperText={lastNameError ? 'Невірний формат' : ' '}
+                  error={lastNameError}
+                  onBlur={() =>
+                    setLastNameError(!!firstName ? !checkName(lastName) : true)
+                  }
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Прізвище"
-                name="lastName"
-                autoComplete="lname"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email-адреса"
-                name="email"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Пароль"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="confirm-password"
-                label="Повторіть пароль"
-                type="password"
-                id="confirm-password"
-                autoComplete="current-password"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="Я погоджуюсь"
-              />
+            <Grid container>
+              <Grid item xs={12}>
+                <TextField
+                  inputRef={emailInput}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  onKeyPress={(e: React.KeyboardEvent) => {
+                    setEmail(`${emailInput.current?.value}`);
+                    if (e.key === 'Enter') phoneInput.current?.focus();
+                  }}
+                  id="email"
+                  label="Email-адреса"
+                  name="email"
+                  autoComplete="email"
+                  helperText={emailError ? 'Введіть існуючий email' : ' '}
+                  error={emailError}
+                  onBlur={() =>
+                    setEmailError(!!email ? !validator.isEmail(email) : true)
+                  }
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  inputRef={phoneInput}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  onKeyPress={(e: React.KeyboardEvent) => {
+                    setPhone(`${phoneInput.current?.value}`);
+                    if (e.key === 'Enter') passwordInput.current?.focus();
+                  }}
+                  id="phone"
+                  label="Моб. телефон"
+                  name="phone"
+                  autoComplete="phone"
+                  helperText={phoneError ? 'Введіть існуючий телефон' : ' '}
+                  error={phoneError}
+                  onBlur={() =>
+                    setPhoneError(
+                      !!phone ? !validator.isMobilePhone(phone) : true
+                    )
+                  }
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  inputRef={passwordInput}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  onKeyPress={(e: React.KeyboardEvent) => {
+                    setPassword(`${passwordInput.current?.value}`);
+                  }}
+                  name="password"
+                  label="Пароль"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  helperText={
+                    passwordError
+                      ? 'Пароль повинен містити більше 8 символів'
+                      : ' '
+                  }
+                  error={passwordError}
+                  onBlur={() => setPasswordError(!(password.length >= 8))}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  inputRef={confirmPasswordInput}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  onKeyPress={(e: React.KeyboardEvent) => {
+                    setConfirmPassword(
+                      `${confirmPasswordInput.current?.value}`
+                    );
+                  }}
+                  name="confirm-password"
+                  label="Повторіть пароль"
+                  type="password"
+                  id="confirm-password"
+                  autoComplete="current-password"
+                  helperText={
+                    confirmPasswordError ? 'Повторіть введений пароль' : ' '
+                  }
+                  error={confirmPasswordError}
+                  onBlur={() =>
+                    setConfirmPasswordError(confirmPassword !== password)
+                  }
+                />
+              </Grid>
             </Grid>
           </Grid>
           <Button
@@ -132,6 +232,21 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={
+              !(
+                firstName &&
+                lastName &&
+                password &&
+                email &&
+                phone &&
+                checkName(firstName) &&
+                checkName(lastName) &&
+                validator.isEmail(email) &&
+                validator.isMobilePhone(phone) &&
+                password.length >= 8 &&
+                confirmPassword === password
+              )
+            }
           >
             Зареєструватись
           </Button>
