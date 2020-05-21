@@ -94,9 +94,11 @@ export default function SignUp() {
                   required
                   fullWidth
                   onKeyPress={(e: React.KeyboardEvent) => {
-                    setFirstName(`${firstNameInput.current?.value}`);
                     if (e.key === 'Enter') lastNameInput.current?.focus();
                   }}
+                  onChange={() =>
+                    setFirstName(`${firstNameInput.current?.value}`)
+                  }
                   id="firstName"
                   label="Ім'я"
                   autoFocus
@@ -116,9 +118,11 @@ export default function SignUp() {
                   required
                   fullWidth
                   onKeyPress={(e: React.KeyboardEvent) => {
-                    setLastName(`${lastNameInput.current?.value}`);
                     if (e.key === 'Enter') emailInput.current?.focus();
                   }}
+                  onChange={() =>
+                    setLastName(`${lastNameInput.current?.value}`)
+                  }
                   id="lastName"
                   label="Прізвище"
                   name="lastName"
@@ -139,9 +143,9 @@ export default function SignUp() {
                   required
                   fullWidth
                   onKeyPress={(e: React.KeyboardEvent) => {
-                    setEmail(`${emailInput.current?.value}`);
                     if (e.key === 'Enter') phoneInput.current?.focus();
                   }}
+                  onChange={() => setEmail(`${emailInput.current?.value}`)}
                   id="email"
                   label="Email-адреса"
                   name="email"
@@ -160,9 +164,9 @@ export default function SignUp() {
                   required
                   fullWidth
                   onKeyPress={(e: React.KeyboardEvent) => {
-                    setPhone(`${phoneInput.current?.value}`);
                     if (e.key === 'Enter') passwordInput.current?.focus();
                   }}
+                  onChange={() => setPhone(`${phoneInput.current?.value}`)}
                   id="phone"
                   label="Моб. телефон"
                   name="phone"
@@ -183,6 +187,10 @@ export default function SignUp() {
                   required
                   fullWidth
                   onKeyPress={(e: React.KeyboardEvent) => {
+                    if (e.key === 'Enter')
+                      confirmPasswordInput.current?.focus();
+                  }}
+                  onChange={() => {
                     setPassword(`${passwordInput.current?.value}`);
                   }}
                   name="password"
@@ -205,7 +213,7 @@ export default function SignUp() {
                   variant="outlined"
                   required
                   fullWidth
-                  onKeyPress={(e: React.KeyboardEvent) => {
+                  onChange={() => {
                     setConfirmPassword(
                       `${confirmPasswordInput.current?.value}`
                     );

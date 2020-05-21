@@ -93,8 +93,8 @@ export default function Login() {
               name="login"
               onKeyPress={(e: React.KeyboardEvent) => {
                 if (e.key === 'Enter') passwordInput.current?.focus();
-                setLogin(`${loginInput.current?.value}`);
               }}
+              onChange={() => setLogin(`${loginInput.current?.value}`)}
               helperText={
                 loginError ? 'Введіть свій email або номер телефону' : ' '
               }
@@ -120,9 +120,7 @@ export default function Login() {
               label="Пароль"
               type="password"
               id="password"
-              onKeyPress={(e: React.KeyboardEvent) => {
-                setPassword(`${passwordInput.current?.value}`);
-              }}
+              onChange={() => setPassword(`${passwordInput.current?.value}`)}
               helperText={
                 passwordError
                   ? 'Пароль повинен складатися з 8 символів і більше'
