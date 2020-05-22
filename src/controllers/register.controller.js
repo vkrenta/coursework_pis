@@ -9,7 +9,7 @@ const registerController = async (req, res, next) => {
     const { password, email, fullName, phone } = req.body;
 
     if (!(password && email && fullName && phone))
-      return res.status(400).send('Missing required fields');
+      return res.status(400).send({ message: 'Missing required fields' });
 
     const cPassword = await hash(password, Number(process.env.SALT_ROUNDS));
 
@@ -41,7 +41,9 @@ const registerController = async (req, res, next) => {
       html: htmlTemplate,
     });
 
-    res.status(200).send('Повідомлення відправлено на пошту');
+    res.status(200).send({
+      message: `Лист з підтвердженням реєстрації надіслано на&nbsp;<strong>${email}</strong>`,
+    });
   } catch (e) {
     next(e);
   }

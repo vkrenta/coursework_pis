@@ -11,6 +11,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import validator from 'validator';
+import { useDispatch } from 'react-redux';
+import { signUp } from '../app/actions';
 
 function Copyright() {
   return (
@@ -50,6 +52,7 @@ const checkName = (name: string) =>
 
 export default function SignUp() {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -255,6 +258,10 @@ export default function SignUp() {
                 confirmPassword === password
               )
             }
+            onClick={(e: React.MouseEvent) => {
+              e.preventDefault();
+              dispatch(signUp({ firstName, lastName, email, password, phone }));
+            }}
           >
             Зареєструватись
           </Button>

@@ -3,4 +3,21 @@ export type Action<T = any> = {
   payload?: T | null;
 };
 
+export type Credentials = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  password: string;
+};
+
+export type Notification = {
+  id: number;
+  variant?: 'default' | 'error' | 'success' | 'warning' | 'info';
+  message: string;
+};
+
 export const SET_TOKEN = 'SET_TOKEN';
+export const SIGN_UP = 'SIGN_UP';
+export const ADD_NOTIFICATION = 'ADD_NOTIFICATION';
+export const PURGE_NOTIFICATION = 'PURGE_NOTIFICATION';
