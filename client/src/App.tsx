@@ -10,6 +10,9 @@ import SignUp from './pages/Signup';
 import { SnackbarProvider } from 'notistack';
 import Notifier from './components/Notifier';
 import { IconButton, Icon } from '@material-ui/core';
+import VerifiedSuccess from './pages/verified/VerifiedSuccess';
+import VerifiedTwice from './pages/verified/VerifiedTwice';
+import VerifiedExpired from './pages/verified/VerifiedExpired';
 
 function App() {
   const notistackRef = React.useRef<any>(null);
@@ -36,10 +39,13 @@ function App() {
         <Notifier />
         <Switch>
           <Route exact path="/">
-            <Redirect to="/login" />
+            <Redirect to="/verifiedexpired" />
           </Route>
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={SignUp} />
+          <Route exact path="/verifiedsuccess" component={VerifiedSuccess} />
+          <Route exact path="/verifiedtwice" component={VerifiedTwice} />
+          <Route exact path="/verifiedexpired" component={VerifiedExpired} />
         </Switch>
       </SnackbarProvider>
     </Router>

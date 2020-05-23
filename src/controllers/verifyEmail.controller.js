@@ -14,18 +14,19 @@ const verifyEmailController = async (req, res, next) => {
       'select email from users where email = $1 or phone = $2',
       [email, phone]
     );
+
     if (rowCount)
-      return res.send({ message: `Ви не можете активувати посилання двічі` });
+      return res.redirect(process.env.CLIENT_LINK + '/verifiedtwice');
 
     await pool.query(
       `insert into users(name, phone, email, password) values ($1, $2, $3, $4);`,
       [fullName, phone, email, password]
     );
 
-    res.send({ message: 'Ви успішно зареєстровані' });
+    res.redirect(process.env.CLIENT_LINK + '/verifiedsuccess');
   } catch (e) {
     if (e.code === 2000) {
-      res.status(201).send({ message: 'Термін дії посилання вичерпаний' });
+      res.redirect(process.env.CLIENT_LINK + '/verifiedexpired');
     }
     next(e);
   }

@@ -12,8 +12,8 @@ process.on('uncaughtException', (e) =>
 process.on('unhandledRejection', (e) =>
   log.error({ label: e.name, message: e.message })
 );
-
 const app = express();
+app.get('/favicon.ico', (req, res, next) => next());
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 

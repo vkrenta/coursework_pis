@@ -17,14 +17,5 @@ export default function Notifier() {
       });
   });
 
-  // const handleClick = () => {
-  //   enqueueSnackbar('I love snacks.');
-  // };
-
-  // const handleClickVariant = (variant: VariantType) => () => {
-  //   // variant could be success, error, warning, info, or default
-  //   enqueueSnackbar('This is a success message!', { variant });
-  // };
-
   return null;
 }

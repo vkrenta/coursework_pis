@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon src/index",
+    "server": "cross-env NODE_ENV=LOCAL nodemon src/index",
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "npm start --prefix ./client",
     "client:install": "npm i --prefix ./client",
     "client:build": "npm run build --prefix ./client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "start": "node index.js"
+    "start": "cross-env NODE_ENV=STAGE node index.js"
   },
   "keywords": [],
   "author": "",
@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "concurrently": "^5.2.0",
+    "cross-env": "^7.0.2",
     "eslint": "^7.0.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-standart": "^0.2.0",
