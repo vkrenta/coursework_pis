@@ -3,6 +3,7 @@ import log from '../helpers/log';
 import sendLetter from '../helpers/send-mail';
 import { sign } from '../helpers/verify-email';
 import { promises as fs } from 'fs';
+import pool from '../db';
 
 const registerController = async (req, res, next) => {
   try {
@@ -10,6 +11,18 @@ const registerController = async (req, res, next) => {
 
     if (!(password && email && fullName && phone))
       return res.status(400).send({ message: 'Missing required fields' });
+
+    const {
+      rowCount,
+    } = await pool.query(
+      'select email from users where email = $1 or phone = $2',
+      [email, phone]
+    );
+
+    if (rowCount)
+      return res
+        .status(401)
+        .send({ message: 'Корситувач з даним телефоном чи email вже існує' });
 
     const cPassword = await hash(password, Number(process.env.SALT_ROUNDS));
 

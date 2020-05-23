@@ -11,10 +11,18 @@ const sendRequest = async (
   });
 
   const result = await response.json();
-  if (!response.ok) {
-    const error = new Error();
+
+  const error = new Error();
+  if (response.status === 500) {
     error.message = JSON.stringify({
-      code: result.code,
+      code: 500,
+      message: result.message,
+    });
+    throw error;
+  }
+  if (!response.ok) {
+    error.message = JSON.stringify({
+      code: result.code || 400,
       message: result.message,
     });
     throw error;

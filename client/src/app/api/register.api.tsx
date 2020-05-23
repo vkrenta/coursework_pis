@@ -10,7 +10,7 @@ const register = (credentials: Credentials) => {
       'Content-Type': 'application/json',
     },
     JSON.stringify({
-      fullName: `${firstName} ${lastName}`,
+      fullName: `${firstName.trim()} ${lastName.trim()}`,
       email,
       password,
       phone,
