@@ -1,7 +1,6 @@
 import pool from '../db';
 import { sign } from 'jsonwebtoken';
 import { compare } from 'bcryptjs';
-
 const loginController = async (req, res, next) => {
   const { login, password, remember } = req.body;
   if (!(login && password))
@@ -39,8 +38,7 @@ const loginController = async (req, res, next) => {
       sameSite: 'None',
     });
 
-  console.log('cooks', req.cookies);
-  res.send({ token });
+  res.send({ message: 'Ви успішно увійшли' });
 };
 
 export default loginController;

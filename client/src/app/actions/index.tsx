@@ -7,6 +7,8 @@ import {
   Notification,
   Login,
   SIGN_IN,
+  GET_USER_DATA,
+  SET_START_LOADER,
 } from './types';
 
 export const setToken = (token: string | null): Action<string> => ({
@@ -34,4 +36,11 @@ export const addNotification = (
 export const signIn = (credentials: Login): Action<Login> => ({
   type: SIGN_IN,
   payload: credentials,
+});
+
+export const getUserData = (): Action => ({ type: GET_USER_DATA });
+
+export const setStartLoader = (payload: boolean): Action<boolean> => ({
+  type: SET_START_LOADER,
+  payload,
 });

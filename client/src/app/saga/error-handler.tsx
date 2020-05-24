@@ -2,6 +2,7 @@ import { put } from 'redux-saga/effects';
 import { addNotification } from '../actions';
 
 export default function* errorHandler(e: any) {
+  console.log(e);
   const { message, code } = JSON.parse(e.message);
 
   if (code === 400) {

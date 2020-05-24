@@ -1,29 +1,37 @@
-import React from 'react';
-import Login from './pages/Login';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from 'react-router-dom';
-import SignUp from './pages/Signup';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { SnackbarProvider } from 'notistack';
 import Notifier from './components/Notifier';
 import { IconButton, Icon } from '@material-ui/core';
-import VerifiedSuccess from './pages/verified/VerifiedSuccess';
-import VerifiedTwice from './pages/verified/VerifiedTwice';
-import VerifiedExpired from './pages/verified/VerifiedExpired';
+import useRoutes from './hooks/useRoutes';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from './app/redux';
+import { getUserData } from './app/actions';
+import Preloader from './components/Preloader';
 
 function App() {
   const notistackRef = React.useRef<any>(null);
   const onClickDismiss = (key: number) => () => {
     notistackRef.current?.closeSnackbar(key);
   };
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUserData());
+  }, [dispatch]);
+
+  const token = useSelector((state: RootState) => state.token);
+  const startLoader = useSelector((state: RootState) => state.startLoader);
+  const Routes = useRoutes(token!);
+
+  if (startLoader) return <Preloader />;
+
   return (
     <Router>
       <SnackbarProvider
         ref={notistackRef}
         maxSnack={5}
+        preventDuplicate
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',
@@ -37,16 +45,7 @@ function App() {
         )}
       >
         <Notifier />
-        <Switch>
-          <Route exact path="/">
-            <Redirect to="/verifiedexpired" />
-          </Route>
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/signup" component={SignUp} />
-          <Route exact path="/verifiedsuccess" component={VerifiedSuccess} />
-          <Route exact path="/verifiedtwice" component={VerifiedTwice} />
-          <Route exact path="/verifiedexpired" component={VerifiedExpired} />
-        </Switch>
+        <Routes />
       </SnackbarProvider>
     </Router>
   );

@@ -15,7 +15,7 @@ export const logReq = (req, res, next) => {
   const { method, url, body } = req;
   log.info({
     label: 'Request',
-    message: JSON.stringify({ method, url, body }, null, '  '),
+    message: { method, url, body },
   });
   next();
 };

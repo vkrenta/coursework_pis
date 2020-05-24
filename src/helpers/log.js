@@ -4,10 +4,18 @@ const mFormat = format.printf(({ level, message, timestamp, label }) => {
   if (!label)
     return `[${timestamp
       .replace('T', ' ')
-      .replace('Z', '')}] [${level.toUpperCase()}]: ${message}`;
+      .replace('Z', '')}] [${level.toUpperCase()}]: ${JSON.stringify(
+      message,
+      null,
+      '  '
+    )}`;
   return `[${timestamp
     .replace('T', ' ')
-    .replace('Z', '')}] [${level.toUpperCase()}] [${label}]: ${message}`;
+    .replace('Z', '')}] [${level.toUpperCase()}] [${label}]: ${JSON.stringify(
+    message,
+    null,
+    '  '
+  )}`;
 });
 
 const log = createLogger({
