@@ -13,6 +13,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import validator from 'validator';
+import { useDispatch } from 'react-redux';
+import { signIn } from '../app/actions';
 
 function Copyright() {
   return (
@@ -62,12 +64,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [loginError, setLoginError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
+  const [remember, setRemember] = useState(false);
   const loginInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
+  const checkbox = useRef<HTMLInputElement>(null);
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -133,7 +138,16 @@ export default function Login() {
               }
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={
+                <Checkbox
+                  inputRef={checkbox}
+                  value={`${remember}`}
+                  onChange={() => {
+                    setRemember(!remember);
+                  }}
+                  color="primary"
+                />
+              }
               label="Запам'ятати мене"
             />
             <Button
@@ -148,6 +162,16 @@ export default function Login() {
                 password.length! < 8 ||
                 (!validator.isEmail(login) && !validator.isMobilePhone(login))
               }
+              onClick={(e: React.MouseEvent) => {
+                e.preventDefault();
+                dispatch(
+                  signIn({
+                    login,
+                    password,
+                    remember,
+                  })
+                );
+              }}
             >
               Увійти
             </Button>

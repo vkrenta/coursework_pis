@@ -17,7 +17,14 @@ export type Notification = {
   message: string;
 };
 
+export type Login = {
+  login: string;
+  password: string;
+  remember?: boolean;
+};
+
 export const SET_TOKEN = 'SET_TOKEN';
 export const SIGN_UP = 'SIGN_UP';
 export const ADD_NOTIFICATION = 'ADD_NOTIFICATION';
 export const PURGE_NOTIFICATION = 'PURGE_NOTIFICATION';
+export const SIGN_IN = 'SIGN_IN';

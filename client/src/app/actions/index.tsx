@@ -5,6 +5,8 @@ import {
   SIGN_UP,
   ADD_NOTIFICATION,
   Notification,
+  Login,
+  SIGN_IN,
 } from './types';
 
 export const setToken = (token: string | null): Action<string> => ({
@@ -27,4 +29,9 @@ export const addNotification = (
     message,
     id: Math.random() + Date.now(),
   },
+});
+
+export const signIn = (credentials: Login): Action<Login> => ({
+  type: SIGN_IN,
+  payload: credentials,
 });

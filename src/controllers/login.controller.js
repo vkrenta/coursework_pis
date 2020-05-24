@@ -3,16 +3,20 @@ import { sign } from 'jsonwebtoken';
 import { compare } from 'bcryptjs';
 
 const loginController = async (req, res, next) => {
-  const { login, password } = req.body;
+  const { login, password, remember } = req.body;
   if (!(login && password))
     res.status(400).send({ message: 'missing required fields' });
 
   const {
     rows,
+    rowCount,
   } = await pool.query(
     'select id, password from users where email = $1 or phone = $1',
     [login]
   );
+
+  if (!rowCount)
+    return res.status(401).send({ message: 'Даного користувача не існує' });
 
   const { id } = rows[0];
   const cPassword = rows[0].password;
@@ -23,6 +27,19 @@ const loginController = async (req, res, next) => {
 
   const token = sign({ id }, process.env.JWT_SECRET);
 
+  if (remember)
+    res.cookie('token', token, {
+      httpOnly: true,
+      maxAge: 60000,
+      sameSite: 'None',
+    });
+  else
+    res.cookie('token', token, {
+      httpOnly: true,
+      sameSite: 'None',
+    });
+
+  console.log('cooks', req.cookies);
   res.send({ token });
 };
 
