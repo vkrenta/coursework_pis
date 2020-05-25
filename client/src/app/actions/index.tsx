@@ -9,6 +9,7 @@ import {
   SIGN_IN,
   GET_USER_DATA,
   SET_START_LOADER,
+  SET_QUERYING,
 } from './types';
 
 export const setToken = (token: string | null): Action<string> => ({
@@ -42,5 +43,10 @@ export const getUserData = (): Action => ({ type: GET_USER_DATA });
 
 export const setStartLoader = (payload: boolean): Action<boolean> => ({
   type: SET_START_LOADER,
+  payload,
+});
+
+export const setQuerying = (payload: boolean): Action<boolean> => ({
+  type: SET_QUERYING,
   payload,
 });

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { SnackbarProvider } from 'notistack';
 import Notifier from './components/Notifier';
-import { IconButton, Icon } from '@material-ui/core';
+import { IconButton, Icon, LinearProgress } from '@material-ui/core';
 import useRoutes from './hooks/useRoutes';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from './app/redux';
@@ -22,12 +22,14 @@ function App() {
 
   const token = useSelector((state: RootState) => state.token);
   const startLoader = useSelector((state: RootState) => state.startLoader);
+  const isQuerying = useSelector((state: RootState) => state.isQuerying);
   const Routes = useRoutes(token!);
 
   if (startLoader) return <Preloader />;
 
   return (
     <Router>
+      {isQuerying ? <LinearProgress variant="indeterminate" /> : null}
       <SnackbarProvider
         ref={notistackRef}
         maxSnack={5}

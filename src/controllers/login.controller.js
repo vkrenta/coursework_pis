@@ -29,7 +29,7 @@ const loginController = async (req, res, next) => {
   if (remember)
     res.cookie('token', token, {
       httpOnly: true,
-      maxAge: 60000,
+      maxAge: 3600000 * 24,
       sameSite: 'None',
     });
   else

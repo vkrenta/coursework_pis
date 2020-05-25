@@ -30,3 +30,4 @@ export const PURGE_NOTIFICATION = 'PURGE_NOTIFICATION';
 export const SIGN_IN = 'SIGN_IN';
 export const GET_USER_DATA = 'GET_USER_DATA';
 export const SET_START_LOADER = 'SET_START_LOADER';
+export const SET_QUERYING = 'SET_QUERYING';
