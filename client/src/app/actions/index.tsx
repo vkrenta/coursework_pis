@@ -13,6 +13,7 @@ import {
   UserInfo,
   SET_USER_INFO,
   GET_USER_INFO,
+  SET_PAGE_NAME,
 } from './types';
 
 export const setToken = (token: string | null): Action<string> => ({
@@ -58,5 +59,10 @@ export const setQuerying = (payload: boolean): Action<boolean> => ({
 
 export const setUserInfo = (payload: UserInfo): Action<UserInfo> => ({
   type: SET_USER_INFO,
+  payload,
+});
+
+export const setPageName = (payload: string): Action<string> => ({
+  type: SET_PAGE_NAME,
   payload,
 });

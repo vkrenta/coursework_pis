@@ -6,6 +6,10 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { Avatar } from '@material-ui/core';
+import { useSelector } from 'react-redux';
+import { RootState } from '../app/redux';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -18,11 +22,23 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       flexGrow: 1,
     },
+    buttonProfileText: {
+      padding: 5,
+    },
+    buttonOutText: {
+      padding: 5,
+    },
+    avatar: {
+      backgroundColor: '#f44336',
+    },
   })
 );
 
 export default function Navbar() {
   const classes = useStyles();
+  const fullName = useSelector((state: RootState) => state.userInfo?.name!);
+  const [firstName, lastName] = fullName.split(' ');
+  const pageName = useSelector((state: RootState) => state.pageName);
 
   return (
     <div className={classes.root}>
@@ -37,9 +53,18 @@ export default function Navbar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            News
+            {pageName}
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit">
+            <Avatar
+              className={classes.avatar}
+            >{`${firstName[0]}${lastName[0]}`}</Avatar>
+            <div className={classes.buttonProfileText}>{firstName}</div>
+          </Button>
+          <Button color="inherit">
+            <div className={classes.buttonOutText}>Вихід</div>
+            <ExitToAppIcon />
+          </Button>
         </Toolbar>
       </AppBar>
     </div>
