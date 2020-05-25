@@ -18,7 +18,6 @@ app.get('/favicon.ico', (req, res, next) => next());
 app.use(express.json({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
 app.use(logReq);
 app.use(logRes);
 
