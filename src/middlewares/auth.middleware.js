@@ -9,12 +9,15 @@ const authMiddleware = async (req, res, next) => {
     });
     const { token } = req.cookies;
 
-    if (!token) return res.status(401).send({ message: 'No token provided' });
+    if (!token)
+      return res.status(401).send({ code: 4010, message: 'No token provided' });
 
     try {
       req.body.id = verify(token, process.env.JWT_SECRET).id;
     } catch (err) {
-      return res.status(401).send({ message: 'Bad or expired token provided' });
+      return res
+        .status(401)
+        .send({ code: 4011, message: 'Bad or expired token provided' });
     }
 
     next();

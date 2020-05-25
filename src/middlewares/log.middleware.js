@@ -36,7 +36,7 @@ export const logRes = (req, res, next) => {
     }
     const body = safeParse(Buffer.concat(chunks).toString('utf8'));
 
-    log.info({ label: 'Response', message: body });
+    log.info({ label: 'Response', message: JSON.parse(body) });
 
     defaultEnd.apply(res, restArgs);
   };
