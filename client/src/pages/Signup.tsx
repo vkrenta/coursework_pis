@@ -48,7 +48,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const checkName = (name: string) =>
-  /^([А-ЯІA-ZÀ-ÿ][-,а-яіa-z.']+[ ]*)+/gm.test(name);
+  /^([А-ЯІA-ZÀ-ÿ][-,а-яіa-z.']+[ ]*)+/gm.test(name) &&
+  !validator.contains(name, ' ');
 
 export default function SignUp() {
   const classes = useStyles();

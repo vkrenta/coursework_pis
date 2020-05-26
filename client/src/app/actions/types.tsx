@@ -42,3 +42,4 @@ export const SET_USER_INFO = 'SET_USER_INFO';
 export const SET_START_LOADER = 'SET_START_LOADER';
 export const SET_QUERYING = 'SET_QUERYING';
 export const SET_PAGE_NAME = 'SET_PAGE_NAME';
+export const SET_OPEN_MENU = 'SET_OPEN_MENU';

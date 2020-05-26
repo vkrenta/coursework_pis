@@ -8,13 +8,16 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { Avatar } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../app/redux';
+import { setOpenMenu } from '../app/actions';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
+      top: 0,
+      zIndex: 3,
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -39,16 +42,18 @@ export default function Navbar() {
   const fullName = useSelector((state: RootState) => state.userInfo?.name!);
   const [firstName, lastName] = fullName.split(' ');
   const pageName = useSelector((state: RootState) => state.pageName);
+  const dispatch = useDispatch();
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="sticky">
         <Toolbar>
           <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="menu"
+            onClick={() => dispatch(setOpenMenu(true))}
           >
             <MenuIcon />
           </IconButton>

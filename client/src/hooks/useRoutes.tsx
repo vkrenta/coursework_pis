@@ -7,6 +7,7 @@ import VerifiedTwice from '../pages/verified/VerifiedTwice';
 import VerifiedExpired from '../pages/verified/VerifiedExpired';
 import Profile from '../pages/Profile';
 import Navbar from '../components/Navbar';
+import Menu from '../components/Menu';
 
 export default function useRoutes(token: string | null) {
   return function () {
@@ -26,7 +27,9 @@ export default function useRoutes(token: string | null) {
 
     return (
       <>
+        <Menu />
         <Navbar />
+
         <Switch>
           <Route exact path="/">
             <Redirect to="/profile" />

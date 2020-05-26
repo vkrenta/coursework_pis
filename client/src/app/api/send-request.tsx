@@ -20,6 +20,13 @@ const sendRequest = async (
     });
     throw error;
   }
+  if (response.status === 404) {
+    error.message = JSON.stringify({
+      code: 404,
+      message: result.message,
+    });
+    throw error;
+  }
   if (!response.ok) {
     error.message = JSON.stringify({
       code: result.code || 400,
