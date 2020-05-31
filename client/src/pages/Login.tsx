@@ -17,16 +17,7 @@ import { useDispatch } from 'react-redux';
 import { signIn } from '../app/actions';
 
 function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
+  return null;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +25,8 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(https://source.unsplash.com/random)',
+    backgroundImage:
+      'url(https://drpetry.de/fileadmin/user_upload/Aktuelles/Petry_PERICOAT_COMPOUND_TUS.png)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light'
