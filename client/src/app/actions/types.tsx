@@ -31,6 +31,20 @@ export type UserInfo = null | {
   created_at: Date;
 };
 
+export type Page = null | {
+  name: string;
+  path: string;
+};
+
+export type Event = null | {
+  event_id: number;
+  event_name: string;
+  begins_at: Date;
+  stadium_id: number;
+  stadium_name: string;
+  free_places: number;
+};
+
 export const SET_TOKEN = 'SET_TOKEN';
 export const SIGN_UP = 'SIGN_UP';
 export const ADD_NOTIFICATION = 'ADD_NOTIFICATION';
@@ -43,3 +57,5 @@ export const SET_START_LOADER = 'SET_START_LOADER';
 export const SET_QUERYING = 'SET_QUERYING';
 export const SET_PAGE_NAME = 'SET_PAGE_NAME';
 export const SET_OPEN_MENU = 'SET_OPEN_MENU';
+export const GET_ALL_EVENTS = 'GET_ALL_EVENTS';
+export const SET_EVENTS = 'SET_EVENTS';

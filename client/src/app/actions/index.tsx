@@ -15,6 +15,9 @@ import {
   GET_USER_INFO,
   SET_PAGE_NAME,
   SET_OPEN_MENU,
+  Page,
+  GET_ALL_EVENTS,
+  SET_EVENTS,
 } from './types';
 
 export const setToken = (token: string | null): Action<string> => ({
@@ -63,12 +66,19 @@ export const setUserInfo = (payload: UserInfo): Action<UserInfo> => ({
   payload,
 });
 
-export const setPageName = (payload: string): Action<string> => ({
+export const setPageName = (payload: Page): Action<Page> => ({
   type: SET_PAGE_NAME,
   payload,
 });
 
 export const setOpenMenu = (payload: boolean): Action<boolean> => ({
   type: SET_OPEN_MENU,
+  payload,
+});
+
+export const getAllEventsAction = (): Action => ({ type: GET_ALL_EVENTS });
+
+export const setEvents = (payload: Event[]): Action<Event[]> => ({
+  type: SET_EVENTS,
   payload,
 });

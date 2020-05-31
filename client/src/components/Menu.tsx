@@ -5,8 +5,6 @@ import {
   Theme,
   createStyles,
   Typography,
-  Button,
-  Link,
   ListItem,
   ListItemIcon,
   ListItemText,
@@ -97,7 +95,7 @@ export default function SideMenu() {
                 <MenuIcon />
               </IconButton>
               <Typography variant="h6" className={classes.title}>
-                {pageName}
+                {pageName?.name}
               </Typography>
             </Toolbar>
           </AppBar>
@@ -106,21 +104,25 @@ export default function SideMenu() {
             <MenuItem
               icon={<ConfirmationNumberIcon />}
               title="Мої квитки"
-              path="/"
+              path="/purchases"
             />
-            <MenuItem icon={<StoreIcon />} title="Придбати квиток" path="/" />
+            <MenuItem
+              icon={<StoreIcon />}
+              title="Придбати квиток"
+              path="/buyticket"
+            />
           </List>
           <Divider />
           <List>
             <MenuItem
               icon={<EventAvailableIcon />}
               title="Додати подію"
-              path="/"
+              path="/addevent"
             />
             <MenuItem
               icon={<EventNoteIcon />}
               title="Управління подіями"
-              path="/"
+              path="/events"
             />
           </List>
           <Divider />
@@ -128,9 +130,9 @@ export default function SideMenu() {
             <MenuItem
               icon={<AccountCircleIcon />}
               title="Мій профіль"
-              path="/"
+              path="/profile"
             />
-            <MenuItem icon={<ExitToAppIcon />} title="Вийти" path="/" />
+            <MenuItem icon={<ExitToAppIcon />} title="Вийти" path="/logout" />
           </List>
         </div>
       </Drawer>

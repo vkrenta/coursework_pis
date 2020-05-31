@@ -1,8 +1,8 @@
-import { Action, SET_PAGE_NAME } from '../actions/types';
+import { Action, SET_PAGE_NAME, Page } from '../actions/types';
 
 export default function pageNameReducer(
-  state: string = '',
-  action: Action<string>
+  state: Page = null,
+  action: Action<Page>
 ) {
   return action.type === SET_PAGE_NAME ? action.payload : state;
 }

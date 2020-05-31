@@ -96,7 +96,7 @@ const ProfileItem: React.FC<ProfileItemProps> = (props) => {
 export default function Profile() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(setPageName('Профіль'));
+    dispatch(setPageName({ name: 'Профіль', path: '/profile' }));
   }, [dispatch]);
 
   const { name, phone, email, created_at, orders_count } = useSelector(
