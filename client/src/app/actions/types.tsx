@@ -39,7 +39,7 @@ export type Page = null | {
 export type Event = null | {
   event_id: number;
   event_name: string;
-  begins_at: Date;
+  begins_at: Date | string;
   stadium_id: number;
   stadium_name: string;
   free_places: number;
@@ -59,3 +59,5 @@ export const SET_PAGE_NAME = 'SET_PAGE_NAME';
 export const SET_OPEN_MENU = 'SET_OPEN_MENU';
 export const GET_ALL_EVENTS = 'GET_ALL_EVENTS';
 export const SET_EVENTS = 'SET_EVENTS';
+export const LOG_OUT = 'LOG_OUT';
+export const SET_ORDER_EVENT = 'SET_ORDER_EVENT';

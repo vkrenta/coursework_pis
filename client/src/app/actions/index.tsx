@@ -18,6 +18,9 @@ import {
   Page,
   GET_ALL_EVENTS,
   SET_EVENTS,
+  LOG_OUT,
+  Event,
+  SET_ORDER_EVENT,
 } from './types';
 
 export const setToken = (token: string | null): Action<string> => ({
@@ -80,5 +83,12 @@ export const getAllEventsAction = (): Action => ({ type: GET_ALL_EVENTS });
 
 export const setEvents = (payload: Event[]): Action<Event[]> => ({
   type: SET_EVENTS,
+  payload,
+});
+
+export const logOut = (): Action => ({ type: LOG_OUT });
+
+export const setOrderEvent = (payload: Event): Action => ({
+  type: SET_ORDER_EVENT,
   payload,
 });

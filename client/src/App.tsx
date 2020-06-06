@@ -9,6 +9,22 @@ import { RootState } from './app/redux';
 import { getUserData } from './app/actions';
 import Preloader from './components/Preloader';
 
+const ProgressBar = () => {
+  const isQuerying = useSelector((state: RootState) => state.isQuerying);
+  return isQuerying ? (
+    <LinearProgress
+      variant="indeterminate"
+      style={{
+        position: 'sticky',
+        zIndex: 2,
+        top: 0,
+        left: 0,
+        width: '100%',
+      }}
+    />
+  ) : null;
+};
+
 function App() {
   const notistackRef = React.useRef<any>(null);
   const onClickDismiss = (key: number) => () => {
@@ -22,14 +38,14 @@ function App() {
 
   const token = useSelector((state: RootState) => state.token);
   const startLoader = useSelector((state: RootState) => state.startLoader);
-  const isQuerying = useSelector((state: RootState) => state.isQuerying);
+
   const Routes = useRoutes(token!);
 
   if (startLoader) return <Preloader />;
 
   return (
     <Router>
-      {isQuerying ? <LinearProgress variant="indeterminate" /> : null}
+      <ProgressBar />
       <SnackbarProvider
         ref={notistackRef}
         maxSnack={5}

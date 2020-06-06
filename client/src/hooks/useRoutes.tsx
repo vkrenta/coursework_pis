@@ -10,36 +10,40 @@ import Navbar from '../components/Navbar';
 import Menu from '../components/Menu';
 import BuyingTicketScreen from '../pages/BuyingTicket';
 import AddingEventScreen from '../pages/AddingEventScreen';
+import EventsScreen from '../pages/Events.screen';
 
 export default function useRoutes(token: string | null) {
+  const [begin, setBegin] = React.useState(true);
   return function () {
     if (!token)
       return (
         <Switch>
+          <Route exact path="/">
+            <Redirect to="/login" />
+          </Route>
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={SignUp} />
           <Route exact path="/verifiedsuccess" component={VerifiedSuccess} />
           <Route exact path="/verifiedtwice" component={VerifiedTwice} />
           <Route exact path="/verifiedexpired" component={VerifiedExpired} />
-          <Route exact path="/">
-            <Redirect to="/login" />
-          </Route>
+          {begin ? null : <Redirect to="/" />}
         </Switch>
       );
 
+    setBegin(false);
     return (
       <>
         <Menu />
         <Navbar />
 
         <Switch>
-          <Route exact path="/profile" component={Profile} />
-          <Route exact path="/buyticket" component={BuyingTicketScreen} />
-          <Route exact path="/addevent" component={AddingEventScreen} />
-          <Route exact path="/events" component={AddingEventScreen} />
           <Route exact path="/">
             <Redirect to="/profile" />
           </Route>
+          <Route exact path="/profile" component={Profile} />
+          <Route exact path="/buyticket" component={BuyingTicketScreen} />
+          <Route exact path="/addevent" component={AddingEventScreen} />
+          <Route exact path="/events" component={EventsScreen} />
           <Redirect to="/" />
         </Switch>
       </>

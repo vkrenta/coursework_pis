@@ -23,7 +23,7 @@ const sendRequest = async (
   if (response.status === 404) {
     error.message = JSON.stringify({
       code: 404,
-      message: result.message,
+      message: result,
     });
     throw error;
   }

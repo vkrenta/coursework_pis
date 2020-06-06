@@ -91,9 +91,9 @@ export default function SignUp() {
                   onKeyPress={(e: React.KeyboardEvent) => {
                     if (e.key === 'Enter') lastNameInput.current?.focus();
                   }}
-                  onChange={() =>
-                    setFirstName(`${firstNameInput.current?.value}`)
-                  }
+                  onChange={(event) => {
+                    setFirstName(`${event.target.value}`);
+                  }}
                   id="firstName"
                   label="Ім'я"
                   autoFocus
@@ -115,9 +115,9 @@ export default function SignUp() {
                   onKeyPress={(e: React.KeyboardEvent) => {
                     if (e.key === 'Enter') emailInput.current?.focus();
                   }}
-                  onChange={() =>
-                    setLastName(`${lastNameInput.current?.value}`)
-                  }
+                  onChange={(event) => {
+                    setLastName(`${event.target.value}`);
+                  }}
                   id="lastName"
                   label="Прізвище"
                   name="lastName"
@@ -140,7 +140,9 @@ export default function SignUp() {
                   onKeyPress={(e: React.KeyboardEvent) => {
                     if (e.key === 'Enter') phoneInput.current?.focus();
                   }}
-                  onChange={() => setEmail(`${emailInput.current?.value}`)}
+                  onChange={(event) => {
+                    setEmail(`${event.target.value}`);
+                  }}
                   id="email"
                   label="Email-адреса"
                   name="email"
@@ -161,7 +163,9 @@ export default function SignUp() {
                   onKeyPress={(e: React.KeyboardEvent) => {
                     if (e.key === 'Enter') passwordInput.current?.focus();
                   }}
-                  onChange={() => setPhone(`${phoneInput.current?.value}`)}
+                  onChange={(event) => {
+                    setPhone(`${event.target.value}`);
+                  }}
                   id="phone"
                   label="Моб. телефон"
                   name="phone"
@@ -185,8 +189,8 @@ export default function SignUp() {
                     if (e.key === 'Enter')
                       confirmPasswordInput.current?.focus();
                   }}
-                  onChange={() => {
-                    setPassword(`${passwordInput.current?.value}`);
+                  onChange={(event) => {
+                    setPassword(`${event.target.value}`);
                   }}
                   name="password"
                   label="Пароль"
@@ -208,10 +212,8 @@ export default function SignUp() {
                   variant="outlined"
                   required
                   fullWidth
-                  onChange={() => {
-                    setConfirmPassword(
-                      `${confirmPasswordInput.current?.value}`
-                    );
+                  onChange={(event) => {
+                    setConfirmPassword(`${event.target.value}`);
                   }}
                   name="confirm-password"
                   label="Повторіть пароль"
@@ -251,8 +253,8 @@ export default function SignUp() {
               )
             }
             onClick={(e: React.MouseEvent) => {
-              e.preventDefault();
               dispatch(signUp({ firstName, lastName, email, password, phone }));
+              e.preventDefault();
             }}
           >
             Зареєструватись

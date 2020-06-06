@@ -119,11 +119,7 @@ export default function SideMenu() {
               title="Додати подію"
               path="/addevent"
             />
-            <MenuItem
-              icon={<EventNoteIcon />}
-              title="Управління подіями"
-              path="/events"
-            />
+            <MenuItem icon={<EventNoteIcon />} title="Події" path="/events" />
           </List>
           <Divider />
           <List>

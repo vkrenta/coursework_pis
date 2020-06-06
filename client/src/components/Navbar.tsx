@@ -10,7 +10,8 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { Avatar } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../app/redux';
-import { setOpenMenu } from '../app/actions';
+import { setOpenMenu, logOut } from '../app/actions';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -18,6 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       top: 0,
       zIndex: 3,
+      position: 'sticky',
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -43,6 +45,7 @@ export default function Navbar() {
   const [firstName, lastName] = fullName.split(' ');
   const pageName = useSelector((state: RootState) => state.pageName);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   return (
     <div className={classes.root}>
@@ -60,14 +63,21 @@ export default function Navbar() {
           <Typography variant="h6" className={classes.title}>
             {pageName?.name}
           </Typography>
-          <Button color="inherit">
+          <Button color="inherit" onClick={() => history.push('/profile')}>
             <Avatar
               className={classes.avatar}
             >{`${firstName[0]}${lastName[0]}`}</Avatar>
             <div className={classes.buttonProfileText}>{firstName}</div>
           </Button>
           <Button color="inherit">
-            <div className={classes.buttonOutText}>Вихід</div>
+            <div
+              className={classes.buttonOutText}
+              onClick={() => {
+                dispatch(logOut());
+              }}
+            >
+              Вихід
+            </div>
             <ExitToAppIcon />
           </Button>
         </Toolbar>
